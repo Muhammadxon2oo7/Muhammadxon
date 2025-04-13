@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { motion, AnimatePresence } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -21,11 +21,7 @@ export default function Navbar() {
 
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 50) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
+      setIsScrolled(window.scrollY > 50)
     }
 
     window.addEventListener("scroll", handleScroll)
@@ -34,43 +30,55 @@ export default function Navbar() {
 
   // Mobile menyuni animatsiyasi uchun variants
   const mobileMenuVariants = {
-    open: { opacity: 1, x: 0, transition: { duration: 0.3 } },
-    closed: { opacity: 0, x: "100%", transition: { duration: 0.3 } },
-  }
-
-  // Orqa fon overlay uchun handler
-  const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === e.currentTarget) {
-      setMobileMenuOpen(false)
-    }
+    open: {
+      opacity: 1,
+      scale: 1,
+      transition: { duration: 0.4, ease: "easeOut" },
+    },
+    closed: {
+      opacity: 0,
+      scale: 0.8,
+      transition: { duration: 0.4, ease: "easeIn" },
+    },
   }
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
-        isScrolled ? "bg-slate-900/80 backdrop-blur-md shadow-lg py-2" : "bg-transparent py-4"
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled
+          ? "bg-gradient-to-r from-slate-900 to-slate-800 shadow-lg py-3"
+          : "bg-gradient-to-r from-slate-900/70 to-slate-800/70 py-4"
       }`}
     >
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <motion.div initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.5 }}>
-          <a href="#hero" className="text-2xl font-bold text-gradient">
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          <a
+            href="#hero"
+            className="text-2xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 via-purple-500 to-pink-500"
+          >
             Muhammadxon
           </a>
         </motion.div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-1">
+        <nav className="hidden md:flex space-x-6">
           {navItems.map((item, index) => (
-            <motion.div
+            <motion.a
               key={item.name}
+              href={item.href}
+              className="relative px-4 py-2 text-sm font-medium text-white hover:text-indigo-300 transition-colors group"
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
             >
-              <a href={item.href} className="px-3 py-2 text-sm rounded-md hover:bg-slate-800 transition-colors">
-                {item.name}
-              </a>
-            </motion.div>
+              {item.name}
+              <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-indigo-400 transition-all duration-300 group-hover:w-full" />
+            </motion.a>
           ))}
         </nav>
 
@@ -81,61 +89,60 @@ export default function Navbar() {
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
-            className="hover:bg-primary/20 transition-colors"
+            className="text-white hover:bg-indigo-500/20 rounded-full"
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            <motion.div
+              animate={{ rotate: mobileMenuOpen ? 360 : 0, scale: mobileMenuOpen ? 1.1 : 1 }}
+              transition={{ duration: 0.3 }}
+            >
+              {mobileMenuOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
+            </motion.div>
           </Button>
         </div>
       </div>
 
-      {/* Mobile Navigation va Overlay */}
-      {mobileMenuOpen && (
-        <>
-          {/* Orqa fon overlay */}
+      {/* Mobile Navigation */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
           <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.5 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black z-100"
-            onClick={handleOverlayClick}
-          />
-
-          {/* Mobile Menyu */}
-          <motion.div
-            initial="closed"
-            animate={mobileMenuOpen ? "open" : "closed"}
             variants={mobileMenuVariants}
-            className="fixed top-0 right-0 h-full w-64 bg-slate-900 shadow-lg p-6 z-50"
+            initial="closed"
+            animate="open"
+            exit="closed"
+            className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 z-40 md:hidden flex flex-col justify-center items-center"
           >
-            <div className="flex justify-end mb-6">
+            {/* Yopish tugmasi */}
+            <div className="absolute top-4 right-4">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => setMobileMenuOpen(false)}
                 aria-label="Close menu"
-                className="hover:bg-primary/20"
+                className="text-white hover:bg-purple-500/20 rounded-full"
               >
-                <X className="h-6 w-6" />
+                <X className="h-8 w-8" />
               </Button>
             </div>
 
-            <nav className="flex flex-col space-y-4">
-              {navItems.map((item) => (
+            {/* Menyu elementlari */}
+            <nav className="flex flex-col items-center space-y-8">
+              {navItems.map((item, index) => (
                 <motion.a
                   key={item.name}
                   href={item.href}
-                  className="px-4 py-2 rounded-md hover:bg-slate-800 transition-colors text-lg font-medium text-white"
+                  className="text-3xl font-bold text-white hover:text-purple-300 transition-colors tracking-wide"
                   onClick={() => setMobileMenuOpen(false)}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+                  initial={{ opacity: 0, y: 30 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
                   {item.name}
                 </motion.a>
               ))}
             </nav>
           </motion.div>
-        </>
-      )}
+        )}
+      </AnimatePresence>
     </header>
   )
 }
