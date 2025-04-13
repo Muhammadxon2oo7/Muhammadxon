@@ -5,11 +5,19 @@ import { motion, useInView } from "framer-motion"
 import Image from "next/image"
 import { Button } from "@/components/ui/button"
 import { FileText } from "lucide-react"
+import { Metadata } from "next"
 
+// about.tsx
+export const metadata: Metadata = {
+  title: "Muhammadxon Haqida | Frontend Dasturchi",
+  description:
+    "Muhammadxon Toshpo‘latov haqida – 2+ yillik tajribaga ega frontend dasturchi, React va Next.js loyihalari bilan ishlaydi.",
+};
 export default function About() {
   const ref = useRef<HTMLDivElement>(null)
   const isInView = useInView(ref, { once: true, margin: "-100px" })
 
+  
   return (
     <section id="about" ref={ref} className="py-20 bg-slate-900/50 relative overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -41,7 +49,7 @@ export default function About() {
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-lg parallax-card">
                 <Image
                   src="/img/me.png"
-                  alt="Muhammadxon"
+                  alt="Muhammadxon Toshpo‘latov – Frontend Dasturchi"
                   fill
                   className="object-cover rounded-lg"
                   quality={90} // Sifatni oshirish
