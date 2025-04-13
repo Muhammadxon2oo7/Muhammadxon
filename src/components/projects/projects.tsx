@@ -61,35 +61,35 @@ export default function Projects() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-primary/50 transition-all duration-300 h-full flex flex-col overflow-hidden group">
+              <Card className="bg-slate-800/30 backdrop-blur-md border-slate-700/50 hover:border-primary/50 transition-all duration-300 h-full flex flex-col overflow-hidden group blur-sm">
                 <div className="relative h-48 w-full overflow-hidden">
                   <Image
                     src={project.image || "/placeholder.svg"}
                     alt={project.title}
                     fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover transition-transform duration-500 group-hover:scale-110 blur-md"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60" />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60 blur-md" />
                 </div>
-                <CardContent className="p-6 flex-grow flex flex-col">
-                  <h3 className="text-xl font-bold mb-2">{project.title}</h3>
-                  <p className="text-slate-300 mb-4 flex-grow">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4">
+                <CardContent className="p-6 flex-grow flex flex-col blur-md">
+                  <h3 className="text-xl font-bold mb-2 text-gray-400 blur-md">{project.title}</h3>
+                  <p className="text-slate-300 mb-4 flex-grow blur-md">{project.description}</p>
+                  <div className="flex flex-wrap gap-2 mb-4 blur-md">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded-full">
+                      <span key={tag} className="text-xs bg-slate-700/50 text-slate-300/50 px-2 py-1 rounded-full blur-md">
                         {tag}
                       </span>
                     ))}
                   </div>
-                  <div className="flex gap-3">
-                    <Button size="sm" variant="outline" className="flex-1" asChild>
+                  <div className="flex gap-3 blur-md">
+                    <Button size="sm" variant="outline" className="flex-1 bg-gray-600/50 text-gray-300 blur-md" disabled>
                       <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4 mr-2" /> GitHub
+                        <Github className="h-4 w-4 mr-2 text-gray-400" /> GitHub
                       </a>
                     </Button>
-                    <Button size="sm" className="bg-primary hover:bg-primary/90 flex-1" asChild>
+                    <Button size="sm" className="bg-primary/30 hover:bg-primary/50 flex-1 text-gray-300 blur-md" disabled>
                       <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2" /> Ko&apos;rish
+                        <ExternalLink className="h-4 w-4 mr-2 text-gray-400" /> Ko'rish
                       </a>
                     </Button>
                   </div>

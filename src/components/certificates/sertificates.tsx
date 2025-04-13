@@ -6,30 +6,64 @@ import { useRef, useState } from "react"
 import { motion, useInView } from "framer-motion"
 import Image from "next/image"
 import { Card, CardContent } from "@/components/ui/card"
-import { Award, ExternalLink } from "lucide-react"
+import { Award, ExternalLink, Download } from "lucide-react"
 
 const certificates = [
   {
-    title: "Frontend Development",
-    issuer: "Udemy",
-    date: "2023",
-    image: "/placeholder.svg?height=300&width=500",
-    url: "#",
+    title: "Android Development Track",
+    issuer: "Udacity (One Million Uzbek Coders)",
+    date: "June 2021",
+    image: "/certificates/first.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
+    url: "#", // Kod: 3DHTF3R2 (URL yo‘q)
   },
   {
-    title: "React & Next.js Masterclass",
+    title: "Front End Development Track",
+    issuer: "Udacity (One Million Uzbek Coders)",
+    date: "June 2021",
+    image: "/certificates/second.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
+    url: "#", // Kod: LAGYRCHA (URL yo‘q)
+  },
+  {
+    title: "Full Stack Development Track",
+    issuer: "Udacity (One Million Uzbek Coders)",
+    date: "June 2021",
+    image: "/certificates/third.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
+    url: "#", // Kod: QTC9VCFK6 (URL yo‘q)
+  },
+  {
+    title: "Digital Transformation with Google Cloud",
     issuer: "Coursera",
-    date: "2023",
-    image: "/placeholder.svg?height=300&width=500",
-    url: "#",
+    date: "29.09.2023",
+    image: "/certificates/fourth.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
+    url: "https://coursera.org/verify/Z4HN2FPRGK9Y",
   },
   {
-    title: "TypeScript Professional",
-    issuer: "freeCodeCamp",
-    date: "2022",
-    image: "/placeholder.svg?height=300&width=500",
-    url: "#",
+    title: "Tableau Public for Project Management and Beyond",
+    issuer: "Coursera",
+    date: "01.10.2023",
+    image: "/certificates/fifth.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
+    url: "https://coursera.org/verify/LPVE9TMTMLKL",
   },
+  {
+    title: "Accomplishment STAR Techniques for Job Interviews",
+    issuer: "Coursera",
+    date: "14.10.2023",
+    image: "/certificates/sixth.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
+    url: "https://coursera.org/verify/SEHBCEAKNNNQ",
+  },
+  {
+    title: "Frontend ReactJS ",
+    issuer: "Najot Ta'lim",
+    date: "15.02.2025",
+    image: "/certificates/seventh.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
+    url: "#", // URL yo‘q, PDF sertifikat
+  },
+]
+
+// Sertifikatlarni URL mavjudligi bo‘yicha saralash
+const sortedCertificates = [
+  ...certificates.filter((cert) => cert.url && cert.url !== "#"), // URL mavjud sertifikatlar
+  ...certificates.filter((cert) => !cert.url || cert.url === "#"), // URL yo‘q yoki # bo‘lgan sertifikatlar
 ]
 
 export default function Certificates() {
@@ -60,6 +94,16 @@ export default function Certificates() {
     setActiveIndex(null)
   }
 
+  // Yuklab olish funksiyasi
+  const handleDownload = (imageUrl: string, title: string) => {
+    const link = document.createElement("a")
+    link.href = imageUrl
+    link.download = `${title}-certificate.jpg` // Fayl nomini sertifikat nomi asosida qo‘yamiz
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
   return (
     <section id="certificates" ref={ref} className="py-20 bg-slate-900/50 relative overflow-hidden">
       <div className="absolute inset-0 z-0">
@@ -81,7 +125,7 @@ export default function Certificates() {
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {certificates.map((certificate, index) => (
+          {sortedCertificates.map((certificate, index) => (
             <motion.div
               key={index}
               initial={{ opacity: 0, y: 30 }}
@@ -104,6 +148,15 @@ export default function Certificates() {
                     style={{ transform: "translateZ(20px)" }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60" />
+                  {/* Yuklab olish ikonkasi */}
+                  <motion.button
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={() => handleDownload(certificate.image, certificate.title)}
+                    className="absolute top-2 right-2 p-2 bg-primary/80 rounded-full text-white hover:bg-primary transition-colors"
+                  >
+                    <Download className="h-4 w-4" />
+                  </motion.button>
                 </div>
                 <CardContent
                   className="p-6 flex flex-col"
@@ -117,15 +170,17 @@ export default function Certificates() {
                     <span className="text-slate-300">{certificate.issuer}</span>
                     <span className="text-slate-400 text-sm">{certificate.date}</span>
                   </div>
-                  <a
-                    href={certificate.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex items-center text-primary hover:text-primary/80 transition-colors mt-auto"
-                  >
-                    <span className="mr-1">Ko&apos;rish</span>
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
+                  {certificate.url && certificate.url !== "#" && (
+                    <a
+                      href={certificate.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center text-primary hover:text-primary/80 transition-colors mt-auto"
+                    >
+                      <span className="mr-1">Tekshirish</span>
+                      <ExternalLink className="h-4 w-4" />
+                    </a>
+                  )}
                 </CardContent>
               </Card>
             </motion.div>

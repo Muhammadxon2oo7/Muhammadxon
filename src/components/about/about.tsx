@@ -40,10 +40,12 @@ export default function About() {
             <div className="relative h-[400px] w-full md:h-[500px] overflow-hidden rounded-lg parallax-container">
               <div className="absolute inset-0 bg-gradient-to-tr from-primary/20 to-transparent rounded-lg parallax-card">
                 <Image
-                  src="/placeholder.svg?height=500&width=500"
+                  src="/img/me.png"
                   alt="Muhammadxon"
                   fill
                   className="object-cover rounded-lg"
+                  quality={90} // Sifatni oshirish
+  priority={true} // Tez yuklash uchun
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60" />
               </div>
@@ -73,7 +75,7 @@ export default function About() {
               o&apos;zingizni ko&apos;rsatish imkoniyati hamdir.
             </p>
 
-            <Button className="bg-primary hover:bg-primary/90 text-white" asChild>
+            <Button className="bg-primary hover:bg-primary/90 text-white" asChild variant={"ghost"}>
               <a href="#" download>
                 <FileText className="mr-2 h-4 w-4" /> Rezumeni yuklash
               </a>
