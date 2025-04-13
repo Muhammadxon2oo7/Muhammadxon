@@ -32,6 +32,19 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
+  // Mobile menyuni animatsiyasi uchun variants
+  const mobileMenuVariants = {
+    open: { opacity: 1, x: 0, transition: { duration: 0.3 } },
+    closed: { opacity: 0, x: "100%", transition: { duration: 0.3 } },
+  }
+
+  // Orqa fon overlay uchun handler
+  const handleOverlayClick = (e: React.MouseEvent) => {
+    if (e.target === e.currentTarget) {
+      setMobileMenuOpen(false)
+    }
+  }
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 transition-all duration-300 ${
@@ -68,33 +81,60 @@ export default function Navbar() {
             size="icon"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             aria-label="Toggle menu"
+            className="hover:bg-primary/20 transition-colors"
           >
-            {mobileMenuOpen ? <X /> : <Menu />}
+            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </Button>
         </div>
       </div>
 
-      {/* Mobile Navigation */}
+      {/* Mobile Navigation va Overlay */}
       {mobileMenuOpen && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-slate-900/95 backdrop-blur-md"
-        >
-          <div className="container mx-auto px-4 py-4 flex flex-col space-y-2">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                className="px-4 py-2 rounded-md hover:bg-slate-800 transition-colors"
+        <>
+          {/* Orqa fon overlay */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 0.5 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black z-100"
+            onClick={handleOverlayClick}
+          />
+
+          {/* Mobile Menyu */}
+          <motion.div
+            initial="closed"
+            animate={mobileMenuOpen ? "open" : "closed"}
+            variants={mobileMenuVariants}
+            className="fixed top-0 right-0 h-full w-64 bg-slate-900 shadow-lg p-6 z-50"
+          >
+            <div className="flex justify-end mb-6">
+              <Button
+                variant="ghost"
+                size="icon"
                 onClick={() => setMobileMenuOpen(false)}
+                aria-label="Close menu"
+                className="hover:bg-primary/20"
               >
-                {item.name}
-              </a>
-            ))}
-          </div>
-        </motion.div>
+                <X className="h-6 w-6" />
+              </Button>
+            </div>
+
+            <nav className="flex flex-col space-y-4">
+              {navItems.map((item) => (
+                <motion.a
+                  key={item.name}
+                  href={item.href}
+                  className="px-4 py-2 rounded-md hover:bg-slate-800 transition-colors text-lg font-medium text-white"
+                  onClick={() => setMobileMenuOpen(false)}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {item.name}
+                </motion.a>
+              ))}
+            </nav>
+          </motion.div>
+        </>
       )}
     </header>
   )

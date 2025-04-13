@@ -16,15 +16,60 @@ export default function Contact() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false)
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Telegram bot konfiguratsiyasi
+  const BOT_TOKEN = "8029308056:AAG9v2bAm7qEjP1OR5DtpPhZSSpePCTzI-8"; // BotFather dan olingan token
+  const CHAT_ID = "6407499097"; // Sizning chat yoki guruh IDingiz
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsSubmitting(true)
 
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false)
+    const formData = new FormData(e.target as HTMLFormElement)
+    const name = formData.get("name")?.toString() || ""
+    const telegramUsername = formData.get("telegramUsername")?.toString() || ""
+    const subject = formData.get("subject")?.toString() || ""
+    const message = formData.get("message")?.toString() || ""
+
+    const telegramMessage = `
+      🌟 Yangi xabar: 🌟
+      👤 Ism: ${name}
+      📱 Telegram Username: ${telegramUsername}
+      📌 Mavzu: ${subject}
+      💬 Xabar: ${message}
+    `.trim()
+
+    try {
+      const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: telegramMessage,
+        }),
+      })
+
+      if (!response.ok) {
+        throw new Error("Xabar yuborishda xatolik yuz berdi")
+      }
+
       setIsSubmitted(true)
-    }, 1500)
+      setIsSubmitting(false)
+
+      // 3 soniyadan keyin forma qayta ochiladi
+      setTimeout(() => {
+        setIsSubmitted(false)
+        // Forma maydonlarini tozalash
+        const form = e.target as HTMLFormElement
+        form.reset()
+      }, 3000) // 3 soniya kutish
+
+    } catch (error) {
+      console.error("Xatolik:", error)
+      setIsSubmitting(false)
+      alert("Xabar yuborishda xatolik yuz berdi. Iltimos, keyinroq urinib ko‘ring.")
+    }
   }
 
   return (
@@ -37,7 +82,7 @@ export default function Contact() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Men bilan bog&apos;laning</span>
+            <span className="text-gradient">Men bilan bog'laning</span>
           </h2>
           <div className="h-1 w-20 bg-primary mx-auto" />
         </motion.div>
@@ -48,7 +93,7 @@ export default function Contact() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h3 className="text-2xl font-bold mb-6">Bog&apos;lanish ma&apos;lumotlari</h3>
+            <h3 className="text-2xl font-bold mb-6">Bog'lanish ma'lumotlari</h3>
 
             <div className="space-y-6">
               <Card className="bg-slate-800/50 backdrop-blur-sm border-slate-700">
@@ -58,7 +103,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-sm text-slate-400 mb-1">Telefon</h4>
-                    <p className="text-lg">+998 88 688 82 07</p>
+                    <a href="tel:+998886888207" className="text-lg">+998 88 688 82 07</a>
                   </div>
                 </CardContent>
               </Card>
@@ -70,7 +115,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-sm text-slate-400 mb-1">Email</h4>
-                    <p className="text-lg">muhammadxon0709@gmail.com</p>
+                    <a href="mailto:muhammadxon0709@gmail.com" className="text-lg">muhammadxon0709@gmail.com</a>
                   </div>
                 </CardContent>
               </Card>
@@ -82,7 +127,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-sm text-slate-400 mb-1">Manzil</h4>
-                    <p className="text-lg">Toshkent, O&apos;zbekiston</p>
+                    <p className="text-lg">Toshkent, O'zbekiston</p>
                   </div>
                 </CardContent>
               </Card>
@@ -92,7 +137,7 @@ export default function Contact() {
               <h4 className="text-xl font-bold mb-4">Ijtimoiy tarmoqlar</h4>
               <div className="flex space-x-4">
                 <a
-                  href="https://t.me/muhammadxon"
+                  href="https://t.me/wdhuman"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-full bg-slate-800 hover:bg-primary/20 flex items-center justify-center transition-colors"
@@ -100,7 +145,7 @@ export default function Contact() {
                   <span className="text-lg">T</span>
                 </a>
                 <a
-                  href="https://instagram.com/code.coffee"
+                  href="https://instagram.com/wd.human/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-full bg-slate-800 hover:bg-primary/20 flex items-center justify-center transition-colors"
@@ -108,7 +153,7 @@ export default function Contact() {
                   <span className="text-lg">I</span>
                 </a>
                 <a
-                  href="https://linkedin.com/in/muhammadxon"
+                  href="www.linkedin.com/in/mukhammadkhontoshpolatov/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-full bg-slate-800 hover:bg-primary/20 flex items-center justify-center transition-colors"
@@ -116,7 +161,7 @@ export default function Contact() {
                   <span className="text-lg">L</span>
                 </a>
                 <a
-                  href="https://github.com/muhammadxon"
+                  href="https://github.com/muhammadxon2oo7"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-full bg-slate-800 hover:bg-primary/20 flex items-center justify-center transition-colors"
@@ -142,7 +187,7 @@ export default function Contact() {
                       <Send className="h-8 w-8 text-primary" />
                     </div>
                     <h4 className="text-xl font-bold mb-2">Xabaringiz yuborildi!</h4>
-                    <p className="text-slate-300">Tez orada siz bilan bog&apos;lanamiz.</p>
+                    <p className="text-slate-300">Tez orada siz bilan bog'lanamiz.</p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="space-y-4">
@@ -153,19 +198,20 @@ export default function Contact() {
                         </label>
                         <Input
                           id="name"
+                          name="name"
                           placeholder="Ismingizni kiriting"
                           required
                           className="bg-slate-900/50 border-slate-700"
                         />
                       </div>
                       <div>
-                        <label htmlFor="email" className="block text-sm mb-2">
-                          Email
+                        <label htmlFor="telegramUsername" className="block text-sm mb-2">
+                          Telegram Username
                         </label>
                         <Input
-                          id="email"
-                          type="email"
-                          placeholder="Email manzilingizni kiriting"
+                          id="telegramUsername"
+                          name="telegramUsername"
+                          placeholder="@username"
                           required
                           className="bg-slate-900/50 border-slate-700"
                         />
@@ -177,6 +223,7 @@ export default function Contact() {
                       </label>
                       <Input
                         id="subject"
+                        name="subject"
                         placeholder="Xabar mavzusini kiriting"
                         required
                         className="bg-slate-900/50 border-slate-700"
@@ -188,6 +235,7 @@ export default function Contact() {
                       </label>
                       <Textarea
                         id="message"
+                        name="message"
                         placeholder="Xabaringizni kiriting"
                         required
                         className="bg-slate-900/50 border-slate-700 min-h-[120px]"
