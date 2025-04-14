@@ -1,14 +1,13 @@
-import type React from "react"
-import type { Metadata } from "next"
-import { Inter } from "next/font/google"
-import "./globals.css"
-import { ThemeProvider } from "@/components/theme-provider"
-import Navbar from "@/components/navbar/navbar"
-import MouseFollower from "@/components/mouse-follower/mouse-follower"
-import Script from "next/script"
+import type React from "react";
+import type { Metadata } from "next";
+import { Inter } from "next/font/google";
+import "./globals.css";
+import { ThemeProvider } from "@/components/theme-provider";
+import Navbar from "@/components/navbar/navbar";
+import MouseFollower from "@/components/mouse-follower/mouse-follower";
+import Script from "next/script";
 
-
-const inter = Inter({ subsets: ["latin"] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Muhammadxon | Frontend Dasturchi va Kontent Yaratuvchi",
@@ -27,8 +26,7 @@ export const metadata: Metadata = {
     "Muhammad",
     "Latifxonovich",
     "coder",
-    
-  ], // Kalit so‘zlar qo‘shildi
+  ],
   authors: [{ name: "Muhammadxon Toshpo‘latov" }],
   openGraph: {
     title: "Muhammadxon | Frontend Dasturchi",
@@ -38,7 +36,7 @@ export const metadata: Metadata = {
     siteName: "Muhammadxon Portfolio",
     images: [
       {
-        url: "/img/me.png", // Saytingiz uchun maxsus rasm yarating
+        url: "/img/me.png",
         width: 1200,
         height: 630,
         alt: "Muhammadxon Portfolio",
@@ -64,13 +62,21 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-  }, // Qidiruv tizimlariga ruxsat
+  },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="uz" suppressHydrationWarning>
       <head>
+        {/* Favicon teglari (avvalgi qo‘shilganlar) */}
+  
+        {/* Rasmdagi qo‘shimcha meta teg */}
+        <meta name="apple-mobile-web-app-title" content="Muhammadxon Portfolio" />
+        {/* Qo‘shimcha meta teglar (ixtiyoriy, lekin foydali) */}
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+        {/* Schema.org skripti */}
         <Script id="schema-org" type="application/ld+json">
           {`
             {
