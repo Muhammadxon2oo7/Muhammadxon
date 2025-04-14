@@ -70,7 +70,7 @@ export default function About() {
             animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <h3 className="text-2xl font-bold mb-4">Men Muhammadxonman – frontend dasturchi va kontent yaratuvchi</h3>
+            <h3 className="text-2xl font-bold mb-4">Men Muhammadxon  – frontend dasturchi va kontent yaratuvchi</h3>
 
             <p className="text-slate-300 mb-6">
               Hozirda 2+ yillik tajribaga ega bo&apos;lgan dasturchiman. HTML, CSS, JavaScript, React va Next.js kabi
@@ -78,16 +78,11 @@ export default function About() {
               yarataman.
             </p>
 
-            <p className="text-slate-300 mb-8">
-              Dasturchilik — bu faqat kod yozish emas, balki fikrni ifoda qilish, odamlarga foyda keltirish va
-              o&apos;zingizni ko&apos;rsatish imkoniyati hamdir.
-            </p>
+            <p className="quote-style">
+  Dasturchilik — bu faqat kod yozish emas, balki fikrni ifoda qilish, odamlarga foyda keltirish va o'zingizni ko'rsatish imkoniyati hamdir.
+</p>
 
-            <Button className="bg-primary hover:bg-primary/90 text-white" asChild variant={"ghost"}>
-              <a href="#" download>
-                <FileText className="mr-2 h-4 w-4" /> Rezumeni yuklash
-              </a>
-            </Button>
+           
           </motion.div>
         </div>
       </div>

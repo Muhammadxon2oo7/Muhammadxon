@@ -110,3 +110,16 @@
   width: 0%;
   transition: width 0.1s ease-out;
 }
+
+.quote-style {
+  font-style: italic; /* Iqtibosga xos egri shrift */
+  font-size: 1.2rem; /* Matnni biroz kattalashtirish */
+  color: #e2e8f0; /* Slate-300 ga yaqin rang */
+  background-color: #1a202c; /* Engil orqa fon */
+  padding: 1.5rem; /* Ichki bo‘shliq */
+  border-left: 4px solid #4299e1; /* Chap tomonda chiziq */
+  border-radius: 8px; /* Yumshoq burchaklar */
+  max-width: 600px; /* Matn uzunligini cheklash */ /* Markazga joylashtirish */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Engil soya */
+  line-height: 1.6; /* Qatorlar orasidagi masofa */
+}
