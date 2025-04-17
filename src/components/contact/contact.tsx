@@ -153,7 +153,7 @@ export default function Contact() {
                   <span className="text-lg">I</span>
                 </a>
                 <a
-                  href="www.linkedin.com/in/mukhammadkhontoshpolatov/"
+                  href="https://linkedin.com/in/mukhammadkhontoshpolatov/"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="h-10 w-10 rounded-full bg-slate-800 hover:bg-primary/20 flex items-center justify-center transition-colors"
