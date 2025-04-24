@@ -1,76 +1,64 @@
-"use client"
+"use client";
 
-import type React from "react"
-
-import { useRef, useState } from "react"
-import { motion, useInView } from "framer-motion"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Phone, Mail, MapPin, Send, Loader2 } from "lucide-react"
+import type React from "react";
+import { useRef, useState } from "react";
+import { motion, useInView } from "framer-motion";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Phone, Mail, MapPin, Send, Loader2 } from "lucide-react";
 
 export default function Contact() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSubmitted, setIsSubmitted] = useState(false)
-
-  // Telegram bot konfiguratsiyasi
-  const BOT_TOKEN = "8029308056:AAG9v2bAm7qEjP1OR5DtpPhZSSpePCTzI-8"; // BotFather dan olingan token
-  const CHAT_ID = "6407499097"; // Sizning chat yoki guruh IDingiz
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsSubmitting(true)
+    e.preventDefault();
+    setIsSubmitting(true);
 
-    const formData = new FormData(e.target as HTMLFormElement)
-    const name = formData.get("name")?.toString() || ""
-    const telegramUsername = formData.get("telegramUsername")?.toString() || ""
-    const subject = formData.get("subject")?.toString() || ""
-    const message = formData.get("message")?.toString() || ""
-
-    const telegramMessage = `
-      🌟 Yangi xabar: 🌟
-      👤 Ism: ${name}
-      📱 Telegram Username: ${telegramUsername}
-      📌 Mavzu: ${subject}
-      💬 Xabar: ${message}
-    `.trim()
+    const formData = new FormData(e.target as HTMLFormElement);
+    const name = formData.get("name")?.toString() || "";
+    const telegramUsername = formData.get("telegramUsername")?.toString() || "";
+    const subject = formData.get("subject")?.toString() || "";
+    const message = formData.get("message")?.toString() || "";
 
     try {
-      const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+      const response = await fetch("/api/sendMessage", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          chat_id: CHAT_ID,
-          text: telegramMessage,
+          name,
+          telegramUsername,
+          subject,
+          message,
         }),
-      })
+      });
 
+      const responseData = await response.json();
       if (!response.ok) {
-        throw new Error("Xabar yuborishda xatolik yuz berdi")
+        throw new Error(responseData.error || "Xabar yuborishda xatolik yuz berdi");
       }
 
-      setIsSubmitted(true)
-      setIsSubmitting(false)
+      setIsSubmitted(true);
+      setIsSubmitting(false);
 
       // 3 soniyadan keyin forma qayta ochiladi
       setTimeout(() => {
-        setIsSubmitted(false)
-        // Forma maydonlarini tozalash
-        const form = e.target as HTMLFormElement
-        form.reset()
-      }, 3000) // 3 soniya kutish
-
-    } catch (error) {
-      console.error("Xatolik:", error)
-      setIsSubmitting(false)
-      alert("Xabar yuborishda xatolik yuz berdi. Iltimos, keyinroq urinib ko‘ring.")
+        setIsSubmitted(false);
+        const form = e.target as HTMLFormElement;
+        form.reset();
+      }, 3000);
+    } catch (error: any) {
+      console.error("Xatolik:", error);
+      setIsSubmitting(false);
+      alert(`Xabar yuborishda xatolik yuz berdi: ${error.message}`);
     }
-  }
+  };
 
   return (
     <section id="contact" ref={ref} className="py-20 bg-slate-900 relative overflow-hidden">
@@ -260,5 +248,5 @@ export default function Contact() {
         </div>
       </div>
     </section>
-  )
+  );
 }
