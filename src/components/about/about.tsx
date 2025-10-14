@@ -91,8 +91,8 @@ export default function About() {
         </div>
       </div>
 
-<section className="mt-10">
-      <div className="giscus" />
+
+      <div className="giscus z-1000" />
       <script src="https://giscus.app/client.js"
         data-repo="Muhammadxon2oo7/Muhammadxon"
         data-repo-id="R_kgDOOYdAfg"
@@ -108,7 +108,7 @@ export default function About() {
         crossOrigin="anonymous"
         async>
 </script>
-    </section>
+   
     </section>
   )
 }
