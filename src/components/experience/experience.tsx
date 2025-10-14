@@ -18,7 +18,7 @@ const experiences = [
     color: "#3B82F6", // Blue
   },
   {
-    company: "Coders planed",
+    company: "Coders planet",
     position: "Web dasturchi kursi",
     period: "01.03.2022 - 01.06.2022",
     description:
@@ -144,7 +144,7 @@ export default function Experience() {
                   className="perspective-1000"
                 >
                   <Card
-                    className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 hover:border-[2px] transition-all duration-300 overflow-hidden"
+                    className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 hover:border-[2px]  transition-all duration-300 overflow-hidden"
                     style={{
                       borderImage: `linear-gradient(to right, ${experience.color}, transparent) 1`,
                     }}

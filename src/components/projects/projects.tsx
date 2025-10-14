@@ -1,104 +1,149 @@
-"use client"
+"use client";
 
-import { useRef } from "react"
-import { motion, useInView } from "framer-motion"
-import Image from "next/image"
-import { Card, CardContent } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Github, ExternalLink } from "lucide-react"
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Github, ExternalLink, Users, Award, Zap, Globe } from "lucide-react";
+import SpotlightCard from "../reactBits/SpotlightCard";
 
 const projects = [
   {
-    title: "E-Commerce Platformasi",
-    description: "Next.js va TypeScript bilan yaratilgan zamonaviy e-commerce platformasi.",
-    image: "/placeholder.svg?height=300&width=500",
-    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Prisma"],
-    githubUrl: "#",
-    liveUrl: "#",
+    title: "SmartQnatCraft",
+    description:
+      "Qoraqalpog'istonning boy madaniy merosini jonlantiruvchi innovatsion sotuv platformasi. Hunarmandchilik san'atini global tomoshabinlarga yetkazib orqali turizmni rivojlantirishga hissa qo'shdi. Bu loyiha nafaqat savdo vositasi, balki madaniy ko'prik – har bir klik orqali an'analar tiriladi.",
+    image: "/craft.png",
+    tags: ["React.js", "TypeScript", "Tailwind CSS", "Shad cn"],
+    liveUrl: "https://qqcraft.uz/",
   },
   {
-    title: "Dashboard Admin Panel",
-    description: "React va Redux bilan yaratilgan admin panel, ma'lumotlarni boshqarish uchun.",
-    image: "/placeholder.svg?height=300&width=500",
-    tags: ["React", "Redux", "Material UI", "Chart.js"],
-    githubUrl: "#",
-    liveUrl: "#",
+    title: "Uzbekhub",
+    description:
+      "O'zbekistonning zamonaviy muammolariga yechim izlovchi ekotizim. Dasturchilar va ijodkorlar uchun yagona platforma bo'lib, hamkorlik va innovatsiyalarni rag'batlantiradi. Bu loyiha nafaqat texnologiya, balki jamiyatni birlashtiruvchi kuch – har bir g'oya bu yerda haqiqatga aylanadi.",
+    image: "/uzbekhub.png",
+    tags: ["Next.js", "TypeScript", "Tailwind CSS", "Shad cn"],
+    liveUrl: "https://uzbekhub.uz/",
   },
   {
-    title: "Mobile Ilova",
-    description: "React Native bilan yaratilgan Android va iOS uchun mobil ilova.",
-    image: "/placeholder.svg?height=300&width=500",
-    tags: ["React Native", "Expo", "Firebase", "Redux"],
-    githubUrl: "#",
-    liveUrl: "#",
+    title: "R3T (SpecifyPro)",
+    description:
+      "AI quvvatlangan inqilobiy platforma – standart texnik topshiriqnomani bir daqiqada yaratish. Dasturchilar va startaplar uchun mo'ljallangan, loyiha maqsadlarini tahlil qilib, mukammal hujjatlarni generatsiya qiladi. Bu loyiha vaqtni tejaydi va ijodkorlikni ochib beradi – har bir g'oya endi osonlikcha amalga oshiriladi.",
+    image: "/r3t.png",
+    tags: ["AI/ML", "Next.js", "OpenAI", "TypeScript"],
+    liveUrl: "https://r3t.uz/",
   },
-]
+];
 
 export default function Projects() {
-  const ref = useRef<HTMLDivElement>(null)
-  const isInView = useInView(ref, { once: true, margin: "-100px" })
+  const ref = useRef<HTMLDivElement>(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="projects" ref={ref} className="py-20 bg-slate-900 relative overflow-hidden">
-      <div className="container mx-auto px-4">
+    <section
+      id="projects"
+      ref={ref}
+      className="py-20  relative overflow-hidden"
+    >
+      <div className="absolute inset-0 " />
+      <div className="container mx-auto px-4 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.8 }}
           className="text-center mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Loyihalarim</span>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 relative">
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-purple-400 to-pink-500">
+              Loyihalar
+            </span>
+            <div className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 w-20 bg-gradient-to-r from-primary to-purple-500 rounded-full" />
           </h2>
-          <div className="h-1 w-20 bg-primary mx-auto" />
+          <p className="text-slate-400 max-w-2xl mx-auto">
+            Men yaratgan va qatnashgan loyihalar – bu nafaqat kod, balki haqiqiy
+            o'zgarishlar. Har biri orqali muammolarni hal qildik va jamiyatga
+            hissa qo'shdik
+          </p>
         </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {projects.map((project, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 30 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-            >
-              <Card className="bg-slate-800/30 backdrop-blur-md border-slate-700/50 hover:border-primary/50 transition-all duration-300 h-full flex flex-col overflow-hidden group blur-sm">
-                <div className="relative h-48 w-full overflow-hidden">
-                  <Image
-                    src={project.image || "/placeholder.svg"}
-                    alt={project.title}
-                    fill
-                    className="object-cover transition-transform duration-500 group-hover:scale-110 blur-md"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent opacity-60 blur-md" />
-                </div>
-                <CardContent className="p-6 flex-grow flex flex-col blur-md">
-                  <h3 className="text-xl font-bold mb-2 text-gray-400 blur-md">{project.title}</h3>
-                  <p className="text-slate-300 mb-4 flex-grow blur-md">{project.description}</p>
-                  <div className="flex flex-wrap gap-2 mb-4 blur-md">
+          {projects.map((project, index) => {
+            return (
+           
+              <SpotlightCard
+                className="custom-spotlight-card"
+                // spotlightColor="rgba(0, 229, 255, 0.2)"
+              >
+                <div className="w-full ">
+                  <div className="relative h-[300px] w-full overflow-hidden rounded-xl mb-[10px]">
+                    <Image
+                      src={project.image}
+                      alt={project.title}
+                      fill
+                      className=" transition-transform duration-700 group-hover:scale-110"
+                      quality={100}
+                    />
+                    <div className="absolute inset-0 " />
+                  </div>
+
+                  <h3 className="text-xl font-bold mb-3 text-white group-hover:text-primary transition-colors duration-300 relative z-10">
+                    {project.title}
+                  </h3>
+                  <p className="text-slate-300 mb-4 flex-grow leading-relaxed relative z-10">
+                    {project.description}
+                  </p>
+
+                  <div className="flex flex-wrap gap-2 mb-6 relative z-10">
                     {project.tags.map((tag) => (
-                      <span key={tag} className="text-xs bg-slate-700/50 text-slate-300/50 px-2 py-1 rounded-full blur-md">
+                      <motion.span
+                        key={tag}
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={
+                          isInView
+                            ? { opacity: 1, scale: 1 }
+                            : { opacity: 0, scale: 0.8 }
+                        }
+                        transition={{ delay: 0.7 + index * 0.1, duration: 0.4 }}
+                        className="text-xs bg-slate-700/50 backdrop-blur-sm text-slate-300 px-3 py-1  border border-slate-600/50 hover:bg-primary/20 hover:border-primary/30 transition-all duration-200 rounded-xl"
+                      >
                         {tag}
-                      </span>
+                      </motion.span>
                     ))}
                   </div>
-                  <div className="flex gap-3 blur-md">
-                    <Button size="sm" variant="outline" className="flex-1 bg-gray-600/50 text-gray-300 blur-md" disabled>
-                      <a href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Github className="h-4 w-4 mr-2 text-gray-400" /> GitHub
-                      </a>
-                    </Button>
-                    <Button size="sm" className="bg-primary/30 hover:bg-primary/50 flex-1 text-gray-300 blur-md" disabled>
-                      <a href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <ExternalLink className="h-4 w-4 mr-2 text-gray-400" /> Ko'rish
+
+                  <div className="flex gap-3 relative z-10">
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      className="flex-1 bg-slate-700/50 hover:bg-slate-600/50 text-slate-300 border-slate-600/50 transition-all duration-200 rounded-xl"
+                      asChild
+                    >
+                      <a
+                        href={project.liveUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <ExternalLink className="h-4 w-4 mr-2" /> Ko'rish
                       </a>
                     </Button>
                   </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+
+                  <motion.div
+                    className="absolute inset-0 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: isInView ? 0.1 : 0 }}
+                    style={{
+                      background:
+                        "radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, transparent 70%)",
+                    }}
+                  />
+                </div>
+              </SpotlightCard>
+
+            );
+          })}
         </div>
       </div>
     </section>
-  )
+  );
 }

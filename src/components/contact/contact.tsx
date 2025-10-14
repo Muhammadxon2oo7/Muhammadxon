@@ -189,7 +189,7 @@ export default function Contact() {
                           name="name"
                           placeholder="Ismingizni kiriting"
                           required
-                          className="bg-slate-900/50 border-slate-700"
+                          className="bg-slate-900/50 border-slate-700 rounded-xl"
                         />
                       </div>
                       <div>
@@ -201,7 +201,7 @@ export default function Contact() {
                           name="telegramUsername"
                           placeholder="@username"
                           required
-                          className="bg-slate-900/50 border-slate-700"
+                          className="bg-slate-900/50 border-slate-700 rounded-xl"
                         />
                       </div>
                     </div>
@@ -214,7 +214,7 @@ export default function Contact() {
                         name="subject"
                         placeholder="Xabar mavzusini kiriting"
                         required
-                        className="bg-slate-900/50 border-slate-700"
+                        className="bg-slate-900/50 border-slate-700 rounded-xl"
                       />
                     </div>
                     <div>
@@ -226,10 +226,10 @@ export default function Contact() {
                         name="message"
                         placeholder="Xabaringizni kiriting"
                         required
-                        className="bg-slate-900/50 border-slate-700 min-h-[120px]"
+                        className="bg-slate-900/50 border-slate-700 min-h-[120px] rounded-xl"
                       />
                     </div>
-                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90" disabled={isSubmitting}>
+                    <Button type="submit" className="w-full bg-primary hover:bg-primary/90 text-white" disabled={isSubmitting}>
                       {isSubmitting ? (
                         <>
                           <Loader2 className="mr-2 h-4 w-4 animate-spin" /> Yuborilmoqda...

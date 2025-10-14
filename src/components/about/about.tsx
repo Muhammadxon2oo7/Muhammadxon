@@ -59,10 +59,14 @@ export default function About() {
               </div>
             </div>
 
-            <div className="absolute -bottom-5 -right-5 h-24 w-24 bg-primary rounded-full flex items-center justify-center">
-              <span className="font-bold text-lg">2+</span>
-              <span className="text-xs ml-1">yil</span>
-            </div>
+        <div className="absolute -bottom-5 -right-5 h-20 w-20 rounded-full flex items-center justify-center 
+  backdrop-blur-md bg-white/10 border border-white/20 shadow-lg">
+  <div className="flex flex-col items-center justify-center">
+    <span className="font-bold text-lg text-white">2+</span>
+    {/* <span className="text-xs text-slate-200">yil</span> */}
+  </div>
+</div>
+
           </motion.div>
 
           <motion.div
@@ -73,7 +77,7 @@ export default function About() {
             <h3 className="text-2xl font-bold mb-4">Men Muhammadxon  – frontend dasturchi va kontent yaratuvchi</h3>
 
             <p className="text-slate-300 mb-6">
-              Hozirda 2+ yillik tajribaga ega bo&apos;lgan dasturchiman. HTML, CSS, JavaScript, React va Next.js kabi
+              Hozirda 2 yillik tajribaga ega bo&apos;lgan dasturchiman. HTML, CSS, JavaScript, React va Next.js kabi
               texnologiyalar bilan ishlayman. Texnologiya va kreativlikni birlashtirib, ilhomlantiruvchi loyihalar
               yarataman.
             </p>
@@ -86,6 +90,25 @@ export default function About() {
           </motion.div>
         </div>
       </div>
+
+<section className="mt-10">
+      <div className="giscus" />
+      <script src="https://giscus.app/client.js"
+        data-repo="Muhammadxon2oo7/Muhammadxon"
+        data-repo-id="R_kgDOOYdAfg"
+        data-category="[KATEGORIYA NOMINI BU YERDA KIRITING]"
+        data-category-id="[KATEGORIYA ID'SINI BU YERDA KIRITING]"
+        data-mapping="pathname"
+        data-strict="0"
+        data-reactions-enabled="1"
+        data-emit-metadata="0"
+        data-input-position="bottom"
+        data-theme="preferred_color_scheme"
+        data-lang="uz"
+        crossOrigin="anonymous"
+        async>
+</script>
+    </section>
     </section>
   )
 }
