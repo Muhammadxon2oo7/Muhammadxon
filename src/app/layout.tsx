@@ -164,6 +164,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           <MouseFollower />
           <Navbar />
           {children}
+          
         </ThemeProvider>
       </body>
     </html>

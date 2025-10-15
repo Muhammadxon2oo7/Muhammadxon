@@ -72,6 +72,7 @@ export default function Projects() {
            
               <SpotlightCard
                 className="custom-spotlight-card"
+                key={index}
                 // spotlightColor="rgba(0, 229, 255, 0.2)"
               >
                 <div className="w-full ">

@@ -91,23 +91,6 @@ export default function About() {
         </div>
       </div>
 
-
-      <div className="giscus z-1000" />
-      <script src="https://giscus.app/client.js"
-        data-repo="Muhammadxon2oo7/Muhammadxon"
-        data-repo-id="R_kgDOOYdAfg"
-        data-category="Ideas"
-        data-category-id="DIC_kwDOOYdAfs4CwoSR"
-        data-mapping="pathname"
-        data-strict="0"
-        data-reactions-enabled="1"
-        data-emit-metadata="1"
-        data-input-position="top"
-        data-theme="preferred_color_scheme"
-        data-lang="uz"
-        crossOrigin="anonymous"
-        async>
-</script>
    
     </section>
   )
