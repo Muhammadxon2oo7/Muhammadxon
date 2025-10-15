@@ -1,7 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion, AnimatePresence, easeInOut } from "framer-motion"
 import { Menu, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
@@ -29,18 +29,18 @@ export default function Navbar() {
   }, [])
 
   // Mobile menyuni animatsiyasi uchun variants
-  const mobileMenuVariants = {
-    open: {
-      opacity: 1,
-      scale: 1,
-      transition: { duration: 0.4, ease: "easeOut" },
-    },
-    closed: {
-      opacity: 0,
-      scale: 0.8,
-      transition: { duration: 0.4, ease: "easeIn" },
-    },
-  }
+const mobileMenuVariants = {
+  open: {
+    opacity: 1,
+    scale: 1,
+    transition: { duration: 0.5, ease: easeInOut },
+  },
+  closed: {
+    opacity: 0,
+    scale: 0.9,
+    transition: { duration: 0.5, ease: easeInOut },
+  },
+};
 
   return (
     <header
@@ -104,13 +104,13 @@ export default function Navbar() {
       {/* Mobile Navigation */}
       <AnimatePresence>
         {mobileMenuOpen && (
-          <motion.div
-            variants={mobileMenuVariants}
-            initial="closed"
-            animate="open"
-            exit="closed"
-            className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 z-40 md:hidden flex flex-col justify-center items-center"
-          >
+         <motion.div
+  variants={mobileMenuVariants}
+  initial="closed"
+  animate="open"
+  exit="closed"
+  className="fixed top-0 left-0 w-full h-full bg-gradient-to-br from-slate-900 via-indigo-900 to-purple-900 z-40 md:hidden flex flex-col justify-center items-center"
+>
             {/* Yopish tugmasi */}
             <div className="absolute top-4 right-4">
               <Button
