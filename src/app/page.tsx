@@ -8,6 +8,7 @@ import GiscusChat from "@/components/GiscusChat";
 import Hero from "@/components/hero/hero";
 import Projects from "@/components/projects/projects";
 import ScrollProgress from "@/components/scroll-progress/scroll-progress";
+import Service from "@/components/service/Service";
 import Skills from "@/components/skills/skills";
 
 
@@ -21,7 +22,7 @@ export default function Home() {
       <Experience />
       <Certificates/>
       <Projects />
-      
+      <Service/>
       <Contact />
       <Footer />
     </main>
