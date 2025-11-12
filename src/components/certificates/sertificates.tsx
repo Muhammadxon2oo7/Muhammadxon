@@ -58,12 +58,29 @@ const certificates = [
     image: "/certificates/seventh.jpg", // Agar rasm bo‘lsa, yo‘lni almashtir
     url: "#", // URL yo‘q, PDF sertifikat
   },
+  {
+    title: "Five Million Prompters Initiative",
+    issuer: "Ministry of Digital Technologies of Uzbekistan & Dubai Future Foundation",
+    date: "12.11.2025",
+    image: "/certificates/five-million-prompters.jpg",
+    url: "https://omp.aistudy.uz/certificate?id=a3b4bb3e-4248-4d2f-e38f-08de21ec8b7c",
+  },
 ]
 
 // Sertifikatlarni URL mavjudligi bo‘yicha saralash
 const sortedCertificates = [
-  ...certificates.filter((cert) => cert.url && cert.url !== "#"), // URL mavjud sertifikatlar
-  ...certificates.filter((cert) => !cert.url || cert.url === "#"), // URL yo‘q yoki # bo‘lgan sertifikatlar
+  ...[...certificates]
+    .sort((a, b) => {
+      const parseDate = (dateStr: string) => {
+        const normalized = dateStr.includes(".")
+          ? dateStr.split(".").reverse().join("-")
+          : dateStr
+        return new Date(normalized).getTime()
+      }
+      return parseDate(b.date) - parseDate(a.date)
+    })
+    .filter((cert) => cert.url && cert.url !== "#"), // URL mavjudlar
+  ...certificates.filter((cert) => !cert.url || cert.url === "#"), // URL yo‘q sertifikatlar
 ]
 
 export default function Certificates() {
