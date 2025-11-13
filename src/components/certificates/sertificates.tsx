@@ -65,6 +65,13 @@ const certificates = [
     image: "/certificates/five-million-prompters.jpg",
     url: "https://omp.aistudy.uz/certificate?id=a3b4bb3e-4248-4d2f-e38f-08de21ec8b7c",
   },
+  {
+  title: "IoT (Internet of Things), Wireless & Cloud Computing Emerging Technologies",
+  issuer: "Yonsei University (via Coursera)",
+  date: "13.11.2025",
+  image: "/certificates/yonsei.jpg", // Sertifikat rasmini shu nom bilan joylashtir
+  url: "https://www.coursera.org/verify/1E1E86WTPT7M/",
+}
 ]
 
 // Sertifikatlarni URL mavjudligi bo‘yicha saralash
