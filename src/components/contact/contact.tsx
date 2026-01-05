@@ -91,7 +91,7 @@ export default function Contact() {
                   </div>
                   <div>
                     <h4 className="text-sm text-slate-400 mb-1">Telefon</h4>
-                    <a href="tel:+998886888207" className="text-lg">+998 88 688 82 07</a>
+                    <a href="tel:+998200007807" className="text-lg">+998 20 000 78 07</a>
                   </div>
                 </CardContent>
               </Card>
