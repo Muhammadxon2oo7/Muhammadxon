@@ -99,7 +99,7 @@ export default function Skills() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Ko'nikmalar</span>
+            <span className="text-gradient cursor-target transition-all duration-300">Ko'nikmalar</span>
           </h2>
           <div className="h-1 w-20 bg-primary mx-auto" />
         </motion.div>
@@ -111,7 +111,7 @@ export default function Skills() {
               initial={{ opacity: 0, y: 30 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 hover:bg-slate-800/80 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group relative"
+              className="bg-slate-800/50 backdrop-blur-sm rounded-lg p-6 hover:bg-slate-800/80 transition-all duration-300 hover:shadow-lg hover:shadow-primary/20 group relative cursor-target transition-all duration-300"
               onMouseEnter={() => setHoveredSkill(skill.name)}
               onMouseLeave={() => setHoveredSkill(null)}
               onClick={() => setClickedSkill(clickedSkill === skill.name ? null : skill.name)}
@@ -126,7 +126,7 @@ export default function Skills() {
                     initial={{ width: 0 }}
                     animate={isInView ? { width: `${skill.level}%` } : { width: 0 }}
                     transition={{ duration: 1, delay: 0.5 + index * 0.1, ease: "easeOut" }}
-                    className="h-2.5 rounded-full"
+                    className="h-2.5 rounded-full "
                     style={{ background: `linear-gradient(to right, ${skill.color}, ${skill.color}80)` }}
                   />
                 </div>
@@ -141,7 +141,7 @@ export default function Skills() {
                     animate={{ opacity: 1, y: -10, scale: 1 }}
                     exit={{ opacity: 0, y: -20, scale: 0.8 }}
                     transition={{ duration: 0.3 }}
-                    className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full z-10"
+                    className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-full z-10 cursor-target transition-all duration-300"
                   >
                     {/* Tooltip konteyneri */}
                     <div className="relative">

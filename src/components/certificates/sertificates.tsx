@@ -143,7 +143,7 @@ export default function Certificates() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Sertifikatlarim</span>
+            <span className="text-gradient cursor-target transition-all duration-300">Sertifikatlarim</span>
           </h2>
           <div className="h-1 w-20 bg-primary mx-auto" />
         </motion.div>
@@ -158,7 +158,7 @@ export default function Certificates() {
               className="perspective-1000"
             >
               <Card
-                className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-primary/50 transition-all duration-300 h-full overflow-hidden"
+                className="bg-slate-800/50 backdrop-blur-sm border-slate-700 hover:border-primary/50 transition-all duration-300 h-full overflow-hidden "
                 onMouseMove={(e) => handleMouseMove(e, index)}
                 onMouseLeave={handleMouseLeave}
                 style={{ transformStyle: "preserve-3d", transition: "transform 0.3s ease" }}
@@ -188,11 +188,11 @@ export default function Certificates() {
                 >
                   <div className="flex items-center mb-3">
                     <Award className="h-5 w-5 text-primary mr-2" />
-                    <h3 className="text-xl font-bold">{certificate.title}</h3>
+                    <h3 className="text-xl font-bold cursor-target transition-all duration-300">{certificate.title}</h3>
                   </div>
                   <div className="flex flex-col mb-4">
-                    <span className="text-slate-300">{certificate.issuer}</span>
-                    <span className="text-slate-400 text-sm">{certificate.date}</span>
+                    <span className="text-slate-300 cursor-target transition-all duration-300">{certificate.issuer}</span>
+                    <span className="text-slate-400 text-sm cursor-target transition-all duration-300">{certificate.date}</span>
                   </div>
                   {certificate.url && certificate.url !== "#" && (
                     <a

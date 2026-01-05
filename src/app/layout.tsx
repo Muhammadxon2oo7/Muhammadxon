@@ -161,7 +161,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <MouseFollower />
+          {/* <MouseFollower /> */}
           <Navbar />
           {children}
           

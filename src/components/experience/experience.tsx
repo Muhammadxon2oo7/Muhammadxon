@@ -83,7 +83,7 @@ export default function Experience() {
           className="text-center mb-16"
         >
           <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            <span className="text-gradient">Ish tajribam</span>
+            <span className="text-gradient cursor-target transition-all duration-300">Ish tajribam</span>
           </h2>
           <div className="h-1 w-20 bg-primary mx-auto" />
         </motion.div>
@@ -112,7 +112,7 @@ export default function Experience() {
               initial={{ opacity: 0, y: 50 }}
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
               transition={{ duration: 0.6, delay: index * 0.2 }}
-              className={`relative flex flex-col md:flex-row items-center mb-12 ${
+              className={`relative flex flex-col md:flex-row items-center mb-12  ${
                 index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
             >
@@ -144,7 +144,7 @@ export default function Experience() {
                   className="perspective-1000"
                 >
                   <Card
-                    className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 hover:border-[2px]  transition-all duration-300 overflow-hidden"
+                    className="bg-slate-800/80 backdrop-blur-sm border border-slate-700 hover:border-[2px]  transition-all duration-300 overflow-hidden cursor-target transition-all duration-300"
                     style={{
                       borderImage: `linear-gradient(to right, ${experience.color}, transparent) 1`,
                     }}
@@ -154,7 +154,7 @@ export default function Experience() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.2 }}
-                        className="text-xl font-bold mb-1"
+                        className="text-xl font-bold mb-1 cursor-target transition-all duration-300"
                       >
                         {experience.company}
                       </motion.h3>
@@ -172,16 +172,16 @@ export default function Experience() {
                         initial={{ opacity: 0, x: -10 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: 0.6 }}
-                        className="flex items-center text-slate-400 mb-4 text-sm"
+                        className="flex items-center text-slate-400 mb-4 text-sm "
                       >
                         <Calendar className="h-4 w-4 mr-2" />
-                        <span>{experience.period}</span>
+                        <span className="cursor-target transition-all duration-300">{experience.period}</span>
                       </motion.div>
                       <motion.p
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5, delay: 0.8 }}
-                        className="text-slate-300"
+                        className="text-slate-300 cursor-target transition-all duration-300"
                       >
                         {experience.description}
                       </motion.p>

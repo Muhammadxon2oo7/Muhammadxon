@@ -251,17 +251,17 @@ export default function Projects() {
         >
           <div className="flex items-center justify-center gap-2 mb-4">
             <Sparkles className="w-6 h-6 text-yellow-500" />
-            <Badge variant="outline" className="border-purple-500 text-purple-400">
+            <Badge variant="outline" className="border-purple-500 text-purple-400 cursor-target transition-all duration-300">
               So'nggi loyihalar
             </Badge>
             <Sparkles className="w-6 h-6 text-yellow-500" />
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-cyan-400 via-purple-400 to-pink-400 bg-clip-text text-transparent cursor-target transition-all duration-300">
               Mening Loyihalarim
             </span>
           </h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg">
+          <p className="text-slate-400 max-w-2xl mx-auto text-lg cursor-target transition-all duration-300">
             Har bir loyiha – bu nafaqat kod, balki jamiyat uchun haqiqiy o‘zgarish.
           </p>
         </motion.div>
@@ -307,12 +307,12 @@ export default function Projects() {
                     </div>
 
                     {/* Title */}
-                    <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent">
+                    <h3 className="text-2xl font-bold mb-3 bg-gradient-to-r from-white to-slate-300 bg-clip-text text-transparent cursor-target transition-all duration-300">
                       {project.title}
                     </h3>
 
                     {/* Description */}
-                    <p className="text-slate-300 mb-5 line-clamp-3 leading-relaxed">
+                    <p className="text-slate-300 mb-5 line-clamp-3 leading-relaxed cursor-target transition-all duration-300">
                       {project.description}
                     </p>
 

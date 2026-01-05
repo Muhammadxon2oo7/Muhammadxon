@@ -112,10 +112,10 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="mb-6"
         >
-          <h1 className="text-4xl md:text-6xl font-bold mb-4">
+          <h1 className="text-4xl md:text-6xl font-bold mb-4 cursor-target transition-all duration-300">
   Assalomu alaykum, men <span className="text-gradient">Muhammadxon Toshpo‘latov</span>
 </h1>
-          <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto">
+          <p className="text-xl md:text-2xl text-slate-300 max-w-2xl mx-auto cursor-target transition-all duration-300">
             Frontend dasturchi va ijtimoiy tarmoqlarda kontent yaratuvchiman
           </p>
         </motion.div>
@@ -126,10 +126,10 @@ export default function Hero() {
           transition={{ duration: 0.8, delay: 0.3 }}
           className="flex flex-wrap justify-center gap-4 mt-8"
         >
-          <Button size="lg" className="bg-primary hover:bg-primary/90 text-white" asChild>
+          <Button size="lg" className="bg-primary hover:bg-primary/90 text-white cursor-target transition-all duration-300" asChild>
             <a href="#projects">Loyihalarni ko&apos;rish</a>
           </Button>
-          <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10" asChild>
+          <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 cursor-target transition-all duration-300" asChild>
             <a href="#contact">Men bilan bog&apos;laning</a>
           </Button>
         </motion.div>
