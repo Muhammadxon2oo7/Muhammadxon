@@ -12,7 +12,7 @@ export default function Footer() {
         <div className="flex flex-col md:flex-row justify-between items-center">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
             <p className="text-slate-400 text-center md:text-left cursor-target transition-all duration-300">
-              &copy; 2023 Muhammadxon. Barcha huquqlar himoyalangan.
+              &copy; 2022 Muhammadxon. Barcha huquqlar himoyalangan.
             </p>
           </motion.div>
 
