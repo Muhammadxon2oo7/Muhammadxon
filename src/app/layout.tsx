@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme-provider";
 import Navbar from "@/components/navbar/navbar";
 import MouseFollower from "@/components/mouse-follower/mouse-follower";
 import Script from "next/script";
+import VisitorTracker from "@/components/visitor-tracker";
 
 const inter = Inter({ subsets: ["latin"], display: "swap" });
 
@@ -82,7 +83,7 @@ export const metadata: Metadata = {
     canonical: "https://muhammadxon.uz",
   },
   verification: {
-    google: "YOUR_GOOGLE_VERIFICATION_CODE", // ← bu yerga Google Search Console’dan olingan kodni qo‘ying
+    google: "YOUR_GOOGLE_VERIFICATION_CODE", 
   },
 };
 
@@ -90,7 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="uz" suppressHydrationWarning>
       <head>
-        {/* Favicon va Apple uchun ikonlar */}
+        
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" sizes="180x180" href="/img/favicon/apple-icon-180x180.png" />
         <link rel="icon" type="image/png" sizes="32x32" href="/img/favicon/favicon-32x32.png" />
@@ -110,11 +111,11 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         <link rel="canonical" href="https://muhammadxon.uz" />
         <meta name="language" content="Uzbek" />
 
-        {/* Light va Dark mode uchun meta */}
+        
         <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
         <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
 
-        {/* Schema.org Structured Data */}
+       
         <Script id="schema-json-person" type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
@@ -161,8 +162,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       </head>
       <body className={inter.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          {/* <MouseFollower /> */}
           <Navbar />
+           <VisitorTracker />
           {children}
           
         </ThemeProvider>
